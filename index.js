@@ -2,8 +2,8 @@
 import piratebay from './robots/piratebay.js';
 
 const start = async () => {
-    //const inputState = await input();
-    piratebay();
+    const state = await input();
+    piratebay(state);
     //console.log(JSON.stringify(inputState));
 };
 

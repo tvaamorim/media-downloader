@@ -1,22 +1,14 @@
 import readlineSync from 'readline-sync';
-
-const SERIE = 'Serie';
-const MOVIE = 'Movie';
-
-const suportedMediaTypes = [SERIE,MOVIE];
-const suportedMediaQuality = ['720p','1080p', '2160p'];
+import {
+    getStateModel,
+    suportedMediaTypes,
+    suportedMediaQuality,
+} from '../const.js';
 
 
  const input = async () => {
-    const state = {
-        mediaType: undefined,
-        mediaName: undefined,
-        serieSerie: undefined,
-        serieEpisodes: undefined,
-        mediaNames: [],
-        mediaQuality: '720p'
-    }
-    
+    const state = getStateModel();
+
     state.mediaType = await suportedMediaTypes[askTheMediaType()];
     state.mediaQuality = await suportedMediaQuality[askTheMediaQuality()];
     state.mediaName = await askTheMediaName(state.mediaType);
@@ -26,7 +18,9 @@ const suportedMediaQuality = ['720p','1080p', '2160p'];
         state.serieSerie = serieAndEpisode[0];
         state.serieEpisodes = serieAndEpisode[1];
         state.mediaNames = await generateDownloadName(state.mediaName, state.serieSerie, state.serieEpisodes)
-    } 
+    } else {
+        state.mediaNames.push(mediaName);
+    }
 
     console.log(`We will download the ${state.mediaType}, ${state.mediaName} in ${state.mediaQuality}`)
     return state;
