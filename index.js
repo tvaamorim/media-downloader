@@ -1,3 +1,9 @@
-const input = require('./robots/input.js')
+import input from './robots/input.js';
 
-input();
+const start = async () => {
+    const inputState = await input();
+
+    console.log(JSON.stringify(inputState));
+};
+
+start();
