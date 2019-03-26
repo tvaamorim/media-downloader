@@ -54,9 +54,9 @@ const generateDownloadName = async (mediaName, serie, serieEpisodes) => {
     if(serieEpisodes.indexOf('-') > -1){
         const range = serieEpisodes.split('-');
         const dif = range[1] - range[0];
-        for(let count = range[0]; count <= range[1]; count++){
+        for(let episode = range[0]; episode <= range[1]; episode++){
             episodesArray.push({ 
-                name: `${mediaName} S${pad(serie,2)}E${pad(count,2)}`,
+                name: `${mediaName} S${pad(serie,2)}E${pad(episode,2)}`,
                 serie,
                 episode
             });
@@ -64,9 +64,9 @@ const generateDownloadName = async (mediaName, serie, serieEpisodes) => {
     } else if(serieEpisodes === '0') {
         // TODO no IMDB pegar a quantidade de episodios
         const maxEpisodes = 24
-        for(let count = 1; count <= maxEpisodes; count++){
+        for(let episode = 1; episode <= maxEpisodes; episode++){
             episodesArray.push({ 
-                name: `${mediaName} S${pad(serie,2)}E${pad(count,2)}`,
+                name: `${mediaName} S${pad(serie,2)}E${pad(episode,2)}`,
                 serie,
                 episode,
             });
