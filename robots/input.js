@@ -1,5 +1,6 @@
 import readlineSync from 'readline-sync';
 import {
+    SERIE,
     getStateModel,
     suportedMediaTypes,
     suportedMediaQuality,
@@ -17,9 +18,9 @@ import {
         const serieAndEpisode = await askTheSeriesAndEpisode(state);
         state.serieSerie = serieAndEpisode[0];
         state.serieEpisodes = serieAndEpisode[1];
-        state.mediaNames = await generateDownloadName(state.mediaName, state.serieSerie, state.serieEpisodes)
+        state.mediasInfos = await generateDownloadName(state.mediaName, state.serieSerie, state.serieEpisodes)
     } else {
-        state.mediaNames.push(mediaName);
+        state.mediasInfos.push({ name: state.mediaName });
     }
 
     console.log(`We will download the ${state.mediaType}, ${state.mediaName} in ${state.mediaQuality}`)
@@ -48,25 +49,37 @@ const askTheSeriesAndEpisode = async (state) => {
 const askTheMediaQuality = () => 
     readlineSync.keyInSelect(suportedMediaQuality, 'Witch quality do you want to download?');
 
-const generateDownloadName = async (mediaName, serieSerie, serieEpisodes) => {
+const generateDownloadName = async (mediaName, serie, serieEpisodes) => {
     const episodesArray = []
     if(serieEpisodes.indexOf('-') > -1){
         const range = serieEpisodes.split('-');
         const dif = range[1] - range[0];
         for(let count = range[0]; count <= range[1]; count++){
-            episodesArray.push(`${mediaName} S${pad(serieSerie,2)}E${pad(count,2)}`);
+            episodesArray.push({ 
+                name: `${mediaName} S${pad(serie,2)}E${pad(count,2)}`,
+                serie,
+                episode
+            });
         } 
     } else if(serieEpisodes === '0') {
         // TODO no IMDB pegar a quantidade de episodios
         const maxEpisodes = 24
         for(let count = 1; count <= maxEpisodes; count++){
-            episodesArray.push(`${mediaName} S${pad(serieSerie,2)}E${pad(count,2)}`);
+            episodesArray.push({ 
+                name: `${mediaName} S${pad(serie,2)}E${pad(count,2)}`,
+                serie,
+                episode,
+            });
         } 
     } else {
         const range = serieEpisodes.split(',');
         const dif = range[1] - range[0];
         for(let episode of range){
-            episodesArray.push(`${mediaName} S${pad(serieSerie,2)} E${pad(episode,2)}`);
+            episodesArray.push({
+                name: `${mediaName} S${pad(serie,2)} E${pad(episode,2)}`,
+                serie,
+                episode,
+            });
         } 
     }
     return episodesArray;

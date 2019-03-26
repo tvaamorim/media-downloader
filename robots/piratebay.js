@@ -1,9 +1,10 @@
 import PirateBay from 'thepiratebay';
+import { SERIE } from '../const.js'
 
-const pirateBay = () => {
+const pirateBay = async inputState => await searchAllMedias(inputState.mediasInfos);
 
-const search = async () => {
-    const searchResults = await PirateBay.search('The Walking Dead S09E06 720p', {
+const search = async (mediaInfos) => {
+    const searchResults = await PirateBay.search(mediaInfos.name, {
       category: 'video',
       page: 0,
       orderBy: 'seeds',
@@ -12,15 +13,14 @@ const search = async () => {
         verified: false
       },
     })
-    console.log(searchResults)
-    console.log('---------------------');
-    const torrent = await PirateBay.getTorrent(searchResults[0].id);
-    
-    console.log(torrent)
+    console.log(searchResults[0])
+    mediaInfos.magnetLink = searchResults[0].magnetLink;
   }
 
-search();
-
+const searchAllMedias = async mediasInfos => {
+  for(let mediaInfos of mediasInfos){
+    await search(mediaInfos);
+  }
+  return mediasInfos;
 }
-
 module.exports = pirateBay;

@@ -10,8 +10,8 @@ const stateModel = {
     mediaName: undefined,
     serieSerie: undefined,
     serieEpisodes: undefined,
-    mediaNames: [],
+    mediasInfos: [],
     mediaTorrentLink: [],
     mediaQuality: undefined,
 }
-export const getStateModel = () => { ...stateModel };
+export const getStateModel = () => Object.assign({},  stateModel);
