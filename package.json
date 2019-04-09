@@ -19,7 +19,8 @@
   "homepage": "https://github.com/tvaamorim/media-downloader#readme",
   "dependencies": {
     "readline-sync": "^1.4.9",
-    "thepiratebay": "^1.4.7"
+    "thepiratebay": "^1.4.7",
+    "webtorrent": "^0.103.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

@@ -11,14 +11,14 @@ import {
     const state = getStateModel();
 
     state.mediaType = await suportedMediaTypes[askTheMediaType()];
-    state.mediaQuality = await suportedMediaQuality[askTheMediaQuality()];
     state.mediaName = await askTheMediaName(state.mediaType);
+    state.mediaQuality = await suportedMediaQuality[askTheMediaQuality()];
 
     if( state.mediaType === SERIE) {
         const serieAndEpisode = await askTheSeriesAndEpisode(state);
         state.serieSerie = serieAndEpisode[0];
         state.serieEpisodes = serieAndEpisode[1];
-        state.mediasInfos = await generateDownloadName(state.mediaName, state.serieSerie, state.serieEpisodes)
+        state.mediasInfos = generateDownloadName(state.mediaName, state.serieSerie, state.serieEpisodes)
     } else {
         state.mediasInfos.push({ name: state.mediaName });
     }
@@ -49,7 +49,7 @@ const askTheSeriesAndEpisode = async (state) => {
 const askTheMediaQuality = () => 
     readlineSync.keyInSelect(suportedMediaQuality, 'Witch quality do you want to download?');
 
-const generateDownloadName = async (mediaName, serie, serieEpisodes) => {
+const generateDownloadName = (mediaName, serie, serieEpisodes) => {
     const episodesArray = []
     if(serieEpisodes.indexOf('-') > -1){
         const range = serieEpisodes.split('-');
@@ -76,7 +76,7 @@ const generateDownloadName = async (mediaName, serie, serieEpisodes) => {
         const dif = range[1] - range[0];
         for(let episode of range){
             episodesArray.push({
-                name: `${mediaName} S${pad(serie,2)} E${pad(episode,2)}`,
+                name: `${mediaName} S${pad(serie,2)}E${pad(episode,2)}`,
                 serie,
                 episode,
             });

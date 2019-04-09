@@ -4,6 +4,7 @@ import { SERIE } from '../const.js'
 const pirateBay = async inputState => await searchAllMedias(inputState.mediasInfos);
 
 const search = async (mediaInfos) => {
+    console.log('Buscando por', mediaInfos.name)
     const searchResults = await PirateBay.search(mediaInfos.name, {
       category: 'video',
       page: 0,
